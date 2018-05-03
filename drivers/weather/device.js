@@ -17,7 +17,7 @@ class AqaraWeatherSensor extends ZigBeeDevice {
 
 		// Register the AttributeReportListener
 		this.registerAttrReportListener('msTemperatureMeasurement', 'measuredValue', minIntTemp, maxIntTemp, repChangeTemp,
-				this.onTemperatureReport.bind(this), 0)
+			this.onTemperatureReport.bind(this), 0)
 			.then(() => {
 				// Registering attr reporting succeeded
 				this.log('registered attr report listener - msTemperatureMeasurement');
@@ -34,7 +34,7 @@ class AqaraWeatherSensor extends ZigBeeDevice {
 
 		// Register the AttributeReportListener
 		this.registerAttrReportListener('msRelativeHumidity', 'measuredValue', minIntHum, maxIntHum, repChangeHum,
-				this.onHumidityReport.bind(this), 0)
+			this.onHumidityReport.bind(this), 0)
 			.then(() => {
 				// Registering attr reporting succeeded
 				this.log('registered attr report listener - msRelativeHumidity');
@@ -50,7 +50,7 @@ class AqaraWeatherSensor extends ZigBeeDevice {
 
 		// Register the AttributeReportListener
 		this.registerAttrReportListener('msPressureMeasurement', '16', minIntPres, maxIntPres, repChangePres,
-				this.onPressureReport.bind(this), 0)
+			this.onPressureReport.bind(this), 0)
 			.then(() => {
 				// Registering attr reporting succeeded
 				this.log('registered attr report listener - msPressureMeasurement');
@@ -62,7 +62,7 @@ class AqaraWeatherSensor extends ZigBeeDevice {
 
 		// Register the AttributeReportListener - Lifeline
 		this.registerAttrReportListener('genBasic', '65281', 1, 60, null,
-				this.onLifelineReport.bind(this), 0)
+			this.onLifelineReport.bind(this), 0)
 			.then(() => {
 				// Registering attr reporting succeeded
 				this.log('registered attr report listener - genBasic - Lifeline');
@@ -78,6 +78,13 @@ class AqaraWeatherSensor extends ZigBeeDevice {
 		const temperatureOffset = this.getSetting('temperature_offset') || 0;
 		this.log('measure_temperature', parsedValue, '+ temperature offset', temperatureOffset);
 		this.setCapabilityValue('measure_temperature', parsedValue + temperatureOffset);
+		var currentdate = new Date();
+		this.setSettings({
+			update: currentdate.toLocaleString()
+		})
+			.then(this.log)
+			.catch(this.error);
+		this.log('Updated at', currentdate.toLocaleString());
 	}
 
 	onHumidityReport(value) {
