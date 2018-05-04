@@ -1461,11 +1461,11 @@
             "max": 90
           }
         }, {
-          "id": "update",
+          "id": "lastseen",
           "type": "label",
           "label": {
-            "en": "Last update",
-            "nl": "Laaste data van"
+            "en": "Last seen",
+            "nl": "Laatst gezien"
           },
           "hint":{
             "en":"The time for the last update from this sensor",
@@ -1954,11 +1954,11 @@
             "max": 90
           }
         }, {
-          "id": "update",
+          "id": "lastseen",
           "type": "label",
           "label": {
-            "en": "Last update",
-            "nl": "Laaste data van"
+            "en": "Last seen",
+            "nl": "Laatst gezien"
           },
           "hint":{
             "en":"The time for the last update from this sensor",

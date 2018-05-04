@@ -31,20 +31,26 @@ class XiaomiTempSensor extends ZigBeeDevice {
 		const temperatureOffset = this.getSetting('temperature_offset') || 0;
 		this.log('measure_temperature', parsedValue, '+ temperature offset', temperatureOffset);
 		this.setCapabilityValue('measure_temperature', parsedValue + temperatureOffset);
-		var currentdate = new Date();
-		this.setSettings({
-			update: currentdate.toLocaleString()
-		})
-			.then(this.log)
-			.catch(this.error);
-		this.log('Updated at', currentdate.toLocaleString());
+		this.setLastSeen();
 	}
 
 	onHumidityReport(value) {
 		const parsedValue = Math.round((value / 100) * 10) / 10;
 		this.log('measure_humidity', parsedValue);
 		this.setCapabilityValue('measure_humidity', parsedValue);
+		this.setLastSeen();
 	}
+
+	setLastSeen(){
+		var currentdate = new Date();
+		this.setSettings({
+			lastseen: currentdate.toLocaleString()
+		})
+			.then(this.log)
+			.catch(this.error);
+		this.log('Updated at', currentdate.toLocaleString());
+	}
+
 
 	onLifelineReport(value) {
 		this.log('lifeline report', new Buffer(value, 'ascii'));
