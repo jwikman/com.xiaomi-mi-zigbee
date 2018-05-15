@@ -38,7 +38,24 @@ class AqaraDoorWindowSensor extends ZigBeeDevice {
 	onContactReport(data) {
 		this.log(`alarm_contact -> ${data === 1}`);
 		this.setCapabilityValue('alarm_contact', data === 1);
+		this.setLastSeen();
 	}
+
+	setLastSeen(){
+		var currentdate = new Date();
+		this.setSettings({
+			lastseen: currentdate.toLocaleString()
+		})
+		.then(() => {
+			// Setting LastSeen succeeded
+			this.log('Updated at', currentdate.toLocaleString());
+		})
+		.catch(err => {
+			// Setting LastSeen failed
+			this.error('failed to update LastSeen', err);
+		});
+	}
+
 
 	onLifelineReport(value) {
 		this.log('lifeline report', new Buffer(value, 'ascii'));

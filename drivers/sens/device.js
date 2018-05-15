@@ -46,9 +46,14 @@ class XiaomiTempSensor extends ZigBeeDevice {
 		this.setSettings({
 			lastseen: currentdate.toLocaleString()
 		})
-			.then(this.log)
-			.catch(this.error);
-		this.log('Updated at', currentdate.toLocaleString());
+		.then(() => {
+			// Setting LastSeen succeeded
+			this.log('Updated at', currentdate.toLocaleString());
+		})
+		.catch(err => {
+			// Setting LastSeen failed
+			this.error('failed to update LastSeen', err);
+		});
 	}
 
 
