@@ -6,15 +6,18 @@
 	},
 	"class": "sensor",
 	"capabilities": [
-    "alarm_motion",
-    "measure_luminance",
-    "alarm_battery",
-    "measure_battery"
-  ],
+		"alarm_motion",
+		"measure_luminance",
+		"alarm_battery",
+		"measure_battery"
+	],
 	"zigbee": {
 		"manufacturerName": "LUMI",
 		"productId": "lumi.sensor_motion.aq2",
-		"deviceId": [260, 263],
+		"deviceId": [
+			260,
+			263
+		],
 		"profileId": 260,
 		"learnmode": {
 			"image": "/drivers/sensor_motion.aq2/assets/learn_human_body.svg",
@@ -45,7 +48,7 @@
 				"min": 60,
 				"max": 86400
 			}
-    },
+		},
 		{
 			"id": "battery_threshold",
 			"type": "number",
@@ -62,18 +65,19 @@
 				"min": 1,
 				"max": 90
 			}
-		}, {
-			"id": "update",
+		},
+		{
+			"id": "lastseen",
 			"type": "label",
 			"label": {
-			  "en": "Last update",
-			  "nl": "Laaste data van"
+				"en": "Last seen",
+				"nl": "Laatst gezien"
 			},
-			"hint":{
-				"en":"The time for the last update from this sensor",
-				"nl":"De tijd voor de laatste update van deze sensor"
+			"hint": {
+				"en": "The time for the last update from this sensor",
+				"nl": "De tijd voor de laatste update van deze sensor"
 			},
 			"value": ""
 		}
-  ]
+	]
 }

@@ -7,21 +7,21 @@
 	},
 	"class": "sensor",
 	"capabilities": [
-    "measure_battery",
+		"measure_battery",
 		"measure_temperature",
-    "measure_pressure",
-    "measure_humidity",
+		"measure_pressure",
+		"measure_humidity",
 		"alarm_battery"
-  ],
+	],
 	"zigbee": {
 		"manufacturerName": "LUMI",
 		"productId": [
-      "lumi.weather"
-    ],
+			"lumi.weather"
+		],
 		"deviceId": [
-      770,
-      24321
-    ],
+			770,
+			24321
+		],
 		"profileId": 260,
 		"learnmode": {
 			"image": "/drivers/weather/assets/learn_weather.svg",
@@ -70,16 +70,17 @@
 				"min": 1,
 				"max": 90
 			}
-		}, {
-			"id": "update",
+		},
+		{
+			"id": "lastseen",
 			"type": "label",
 			"label": {
-			  "en": "Last update",
-			  "nl": "Laaste data van"
+				"en": "Last seen",
+				"nl": "Laatst gezien"
 			},
-			"hint":{
-				"en":"The time for the last update from this sensor",
-				"nl":"De tijd voor de laatste update van deze sensor"
+			"hint": {
+				"en": "The time for the last update from this sensor",
+				"nl": "De tijd voor de laatste update van deze sensor"
 			},
 			"value": ""
 		}

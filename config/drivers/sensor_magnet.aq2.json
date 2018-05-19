@@ -6,15 +6,15 @@
 	},
 	"class": "sensor",
 	"capabilities": [
-    "alarm_contact",
+		"alarm_contact",
 		"alarm_battery",
-    "measure_battery"
-  ],
+		"measure_battery"
+	],
 	"zigbee": {
 		"manufacturerName": "LUMI",
 		"productId": [
-      "lumi.sensor_magnet.aq2"
-    ],
+			"lumi.sensor_magnet.aq2"
+		],
 		"deviceId": 24321,
 		"profileId": 260,
 		"learnmode": {
@@ -46,18 +46,19 @@
 				"min": 1,
 				"max": 90
 			}
-		}, {
-			"id": "update",
+		},
+		{
+			"id": "lastseen",
 			"type": "label",
 			"label": {
-			  "en": "Last update",
-			  "nl": "Laaste data van"
+				"en": "Last seen",
+				"nl": "Laatst gezien"
 			},
-			"hint":{
-				"en":"The time for the last update from this sensor",
-				"nl":"De tijd voor de laatste update van deze sensor"
+			"hint": {
+				"en": "The time for the last update from this sensor",
+				"nl": "De tijd voor de laatste update van deze sensor"
 			},
 			"value": ""
 		}
-  ]
+	]
 }
