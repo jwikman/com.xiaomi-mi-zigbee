@@ -11,12 +11,8 @@ class AqaraDoorWindowSensor extends ZigBeeDevice {
 		// this.printNode();
 
 		// Listen for attribute changes on the genOnOff cluster
-		this.registerAttrReportListener('genOnOff', 'onOff', 1, 3600, 1,
+		this.registerAttrReportListener('genOnOff', 'onOff', 1, 60, null,
 				this.onContactReport.bind(this), 0)
-			.then(() => {
-				// Registering attr reporting succeeded
-				this.log('registered attr report listener - genOnOff - Contact');
-			})
 			.catch(err => {
 				// Registering attr reporting failed
 				this.error('failed to register attr report listener - genOnOff - Contact', err);
@@ -25,10 +21,6 @@ class AqaraDoorWindowSensor extends ZigBeeDevice {
 		// Register the AttributeReportListener - Lifeline
 		this.registerAttrReportListener('genBasic', '65281', 1, 60, null,
 				this.onLifelineReport.bind(this), 0)
-			.then(() => {
-				// Registering attr reporting succeeded
-				this.log('registered attr report listener - genBasic - Lifeline');
-			})
 			.catch(err => {
 				// Registering attr reporting failed
 				this.error('failed to register attr report listener - genBasic - Lifeline', err);

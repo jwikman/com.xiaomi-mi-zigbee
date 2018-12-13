@@ -11,50 +11,25 @@ class AqaraWeatherSensor extends ZigBeeDevice {
 		// print the node's info to the console
 		// this.printNode();
 
-		const minIntTemp = this.getSetting('minIntTemp') || 60;
-		const maxIntTemp = this.getSetting('maxIntTemp') || 0;
-		const repChangeTemp = this.getSetting('repChangeTemp') || 1; // note: 1 = 0.01 [°C]
-
 		// Register the AttributeReportListener
-		this.registerAttrReportListener('msTemperatureMeasurement', 'measuredValue', minIntTemp, maxIntTemp, repChangeTemp,
-			this.onTemperatureReport.bind(this), 0)
-			.then(() => {
-				// Registering attr reporting succeeded
-				this.log('registered attr report listener - msTemperatureMeasurement');
-			})
+		this.registerAttrReportListener('msTemperatureMeasurement', 'measuredValue', 1, 60, null,
+				this.onTemperatureReport.bind(this), 0)
 			.catch(err => {
 				// Registering attr reporting failed
 				this.error('failed to register attr report listener - msTemperatureMeasurement', err);
 			});
 
-
-		const minIntHum = this.getSetting('minIntHum') || 60;
-		const maxIntHum = this.getSetting('maxIntHum') || 0;
-		const repChangeHum = this.getSetting('repChangeHum') || 1; // note: 1 = 0.01 [%]
-
 		// Register the AttributeReportListener
-		this.registerAttrReportListener('msRelativeHumidity', 'measuredValue', minIntHum, maxIntHum, repChangeHum,
-			this.onHumidityReport.bind(this), 0)
-			.then(() => {
-				// Registering attr reporting succeeded
-				this.log('registered attr report listener - msRelativeHumidity');
-			})
+		this.registerAttrReportListener('msRelativeHumidity', 'measuredValue', 1, 60, null,
+				this.onHumidityReport.bind(this), 0)
 			.catch(err => {
 				// Registering attr reporting failed
 				this.error('failed to register attr report listener - msRelativeHumidity', err);
 			});
 
-		const minIntPres = this.getSetting('minIntPres') || 60;
-		const maxIntPres = this.getSetting('maxIntPres') || 0;
-		const repChangePres = this.getSetting('repChangePres') || 1; // note: 1 = 0.01 [%]
-
 		// Register the AttributeReportListener
-		this.registerAttrReportListener('msPressureMeasurement', '16', minIntPres, maxIntPres, repChangePres,
-			this.onPressureReport.bind(this), 0)
-			.then(() => {
-				// Registering attr reporting succeeded
-				this.log('registered attr report listener - msPressureMeasurement');
-			})
+		this.registerAttrReportListener('msPressureMeasurement', '16', 1, 60, null,
+				this.onPressureReport.bind(this), 0)
 			.catch(err => {
 				// Registering attr reporting failed
 				this.error('failed to register attr report listener - msPressureMeasurement', err);
@@ -62,11 +37,7 @@ class AqaraWeatherSensor extends ZigBeeDevice {
 
 		// Register the AttributeReportListener - Lifeline
 		this.registerAttrReportListener('genBasic', '65281', 1, 60, null,
-			this.onLifelineReport.bind(this), 0)
-			.then(() => {
-				// Registering attr reporting succeeded
-				this.log('registered attr report listener - genBasic - Lifeline');
-			})
+				this.onLifelineReport.bind(this), 0)
 			.catch(err => {
 				// Registering attr reporting failed
 				this.error('failed to register attr report listener - genBasic - Lifeline', err);
@@ -74,7 +45,8 @@ class AqaraWeatherSensor extends ZigBeeDevice {
 	}
 
 	onTemperatureReport(value) {
-		const parsedValue = Math.round((value / 100) * 10) / 10;
+		const parsedValue = this.getSetting('temperature_decimals') === '2' ? Math.round((value / 100) * 100) / 100 : Math.round((value / 100) * 10) / 10;
+		// const parsedValue = Math.round((value / 100) * 10) / 10;
 		const temperatureOffset = this.getSetting('temperature_offset') || 0;
 		this.log('measure_temperature', parsedValue, '+ temperature offset', temperatureOffset);
 		this.setCapabilityValue('measure_temperature', parsedValue + temperatureOffset);
@@ -82,7 +54,7 @@ class AqaraWeatherSensor extends ZigBeeDevice {
 	}
 	
 	onHumidityReport(value) {
-		const parsedValue = Math.round((value / 100) * 10) / 10;
+		const parsedValue = this.getSetting('humidity_decimals') === '2' ? Math.round((value / 100) * 100) / 100 : Math.round((value / 100) * 10) / 10;
 		this.log('measure_humidity', parsedValue);
 		this.setCapabilityValue('measure_humidity', parsedValue);
 		this.setLastSeen();

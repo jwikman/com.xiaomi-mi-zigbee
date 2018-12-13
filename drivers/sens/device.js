@@ -27,7 +27,7 @@ class XiaomiTempSensor extends ZigBeeDevice {
 	}
 
 	onTemperatureReport(value) {
-		const parsedValue = Math.round((value / 100) * 10) / 10;
+		const parsedValue = this.getSetting('temperature_decimals') === '2' ? Math.round((value / 100) * 100) / 100 : Math.round((value / 100) * 10) / 10;
 		const temperatureOffset = this.getSetting('temperature_offset') || 0;
 		this.log('measure_temperature', parsedValue, '+ temperature offset', temperatureOffset);
 		this.setCapabilityValue('measure_temperature', parsedValue + temperatureOffset);
@@ -35,7 +35,7 @@ class XiaomiTempSensor extends ZigBeeDevice {
 	}
 
 	onHumidityReport(value) {
-		const parsedValue = Math.round((value / 100) * 10) / 10;
+		const parsedValue = this.getSetting('humidity_decimals') === '2' ? Math.round((value / 100) * 100) / 100 : Math.round((value / 100) * 10) / 10;
 		this.log('measure_humidity', parsedValue);
 		this.setCapabilityValue('measure_humidity', parsedValue);
 		this.setLastSeen();

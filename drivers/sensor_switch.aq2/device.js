@@ -32,10 +32,6 @@ class AqaraWirelessSwitchAq2 extends ZigBeeDevice {
 
 		this.registerAttrReportListener('genOnOff', 0x8000, 1, 3600, 1,
 				this.onOnOffListener.bind(this), 0)
-			.then(() => {
-				// Registering attr reporting succeeded
-				this.log('registered attr report listener - genOnOff - 0x8000');
-			})
 			.catch(err => {
 				// Registering attr reporting failed
 				this.error('failed to register attr report listener - genOnOff - 0x8000', err);
@@ -43,10 +39,6 @@ class AqaraWirelessSwitchAq2 extends ZigBeeDevice {
 
 		this.registerAttrReportListener('genOnOff', 'onOff', 1, 3600, 1,
 				this.onOnOffListener.bind(this), 0)
-			.then(() => {
-				// Registering attr reporting succeeded
-				this.log('registered attr report listener - genOnOff - onOff');
-			})
 			.catch(err => {
 				// Registering attr reporting failed
 				this.error('failed to register attr report listener - genOnOff - onOff', err);
@@ -55,10 +47,6 @@ class AqaraWirelessSwitchAq2 extends ZigBeeDevice {
 		// Register the AttributeReportListener - Lifeline
 		this.registerAttrReportListener('genBasic', '65281', 1, 60, null,
 				this.onLifelineReport.bind(this), 0)
-			.then(() => {
-				// Registering attr reporting succeeded
-				this.log('registered attr report listener - genBasic - Lifeline');
-			})
 			.catch(err => {
 				// Registering attr reporting failed
 				this.error('failed to register attr report listener - genBasic - Lifeline', err);
@@ -70,14 +58,6 @@ class AqaraWirelessSwitchAq2 extends ZigBeeDevice {
 		this.triggerButton1_button = new Homey.FlowCardTriggerDevice('button1_button');
 		this.triggerButton1_button
 			.register();
-
-		// DEPRECATED flowCardTrigger for scene
-		this.triggerButton1_scene = new Homey.FlowCardTriggerDevice('button1_scene');
-		this.triggerButton1_scene
-			.register()
-			.registerRunListener((args, state) => {
-				return Promise.resolve(args.scene === state.scene);
-			});
 
 	}
 
@@ -97,9 +77,6 @@ class AqaraWirelessSwitchAq2 extends ZigBeeDevice {
 				Homey.app.triggerButton1_scene.trigger(this, null, remoteValue);
 				// Trigger the trigger card with tokens
 				this.triggerButton1_button.trigger(this, remoteValue, null);
-
-				// DEPRECATED Trigger the trigger card with 1 dropdown option
-				this.triggerButton1_scene.trigger(this, null, remoteValue);
 
 				// reset lastKey after the last trigger
 				this.buttonLastKeyTimeout = setTimeout(() => {

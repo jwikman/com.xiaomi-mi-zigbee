@@ -5,30 +5,22 @@ const ZigBeeDevice = require('homey-meshdriver').ZigBeeDevice;
 class AqaraHumanBodySensor extends ZigBeeDevice {
 	onMeshInit() {
 		// enable debugging
-		this.enableDebug();
+		// this.enableDebug();
 
 		// print the node's info to the console
-		this.printNode();
+		// this.printNode();
 
 		// Register attribute listener for occupancy
-		this.registerAttrReportListener('msOccupancySensing', 'occupancy', 1, 60, 1,
+		this.registerAttrReportListener('msOccupancySensing', 'occupancy', 1, 60, null,
 				this.onOccupancyReport.bind(this), 0)
-			.then(() => {
-				// Registering attr reporting succeeded
-				this.log('registered attr report listener - msOccupancySensing');
-			})
 			.catch(err => {
 				// Registering attr reporting failed
 				this.error('failed to register attr report listener - msOccupancySensing', err);
 			});
 
 		// Register attribute listener for illuminance measurements
-		this.registerAttrReportListener('msIlluminanceMeasurement', 'measuredValue', 1, 60, 1,
+		this.registerAttrReportListener('msIlluminanceMeasurement', 'measuredValue', 1, 60, null,
 				this.onIlluminanceReport.bind(this), 0)
-			.then(() => {
-				// Registering attr reporting succeeded
-				this.log('registered attr report listener - msIlluminanceMeasurement');
-			})
 			.catch(err => {
 				// Registering attr reporting failed
 				this.error('failed to register attr report listener - msIlluminanceMeasurement', err);
@@ -37,10 +29,6 @@ class AqaraHumanBodySensor extends ZigBeeDevice {
 		// Register the AttributeReportListener - Lifeline
 		this.registerAttrReportListener('genBasic', '65281', 1, 60, null,
 				this.onLifelineReport.bind(this), 0)
-			.then(() => {
-				// Registering attr reporting succeeded
-				this.log('registered attr report listener - genBasic - Lifeline');
-			})
 			.catch(err => {
 				// Registering attr reporting failed
 				this.error('failed to register attr report listener - genBasic - Lifeline', err);
