@@ -10,7 +10,7 @@
   "category": [
     "lights"
   ],
-  "version": "0.4.3",
+  "version": "0.4.4",
   "compatibility": ">=1.5.7",
   "athomForumDiscussionId": 4120,
   "homeyCommunityTopicId": 156,
@@ -257,6 +257,20 @@
       },
       "getable": true,
       "setable": true
+    },
+    "heartbeat": {
+      "type": "string",
+      "title": {
+        "en": "Heartbeat",
+        "nl": "Hartslag"
+      },
+      "getable": true,
+      "setable": false
+    }
+  },
+  "capabilitiesOptions": {
+    "heartbeat": {
+      "preventInsights": true
     }
   },
   "flow": {
@@ -2570,7 +2584,8 @@
         "measure_temperature",
         "measure_pressure",
         "measure_humidity",
-        "alarm_battery"
+        "alarm_battery",
+        "heartbeat"
       ],
       "zigbee": {
         "manufacturerName": "LUMI",
@@ -2589,6 +2604,31 @@
             "nl": "Houd tijdens het toevoegen de sensor in de buurt van Homey\nHoud de reset knop ingedrukt voor meer dan 3 seconden totdat de blauwe led drie keer knippert"
           }
         }
+      },
+      "mobile": {
+        "components": [
+          {
+            "id": "icon",
+            "capabilities": [ "measure_temperature" ]
+          },
+          {
+            "id": "sensor",
+            "capabilities": [
+              "measure_battery",
+              "measure_temperature",
+              "measure_pressure",
+              "measure_humidity",
+              "alarm_battery",
+              "heartbeat"
+            ],
+            "options": {
+              "icons": {
+                "heartbeat": "/drivers/weather/assets/heartbeat.svg"
+              }
+            }
+          }
+
+        ]
       },
       "images": {
         "large": "/drivers/weather/assets/images/large.png",

@@ -69,6 +69,7 @@ class AqaraWeatherSensor extends ZigBeeDevice {
 
 	setLastSeen(){
 		var currentdate = new Date();
+		//this.setCapabilityValue('heartbeat', currentdate.toLocaleString());
 		this.setSettings({
 			lastseen: currentdate.toLocaleString()
 		})
@@ -80,11 +81,20 @@ class AqaraWeatherSensor extends ZigBeeDevice {
 			// Setting LastSeen failed
 			this.error('failed to update LastSeen', err);
 		});
+		
+		this.setCapabilityValue("heartbeat", currentdate.toLocaleString())
+		.then(()=>{
+			this.log('Heartbeat updated at', currentdate.toLocaleString());
+		})
+		.catch(err => {
+			this.error('failed to update Heartbeat', err);
+		});
 	}
 
 
 	onLifelineReport(value) {
 		this.log('lifeline report', new Buffer(value, 'ascii'));
+		this.setLastSeen();
 		/*
 		const parsedData = parseData(new Buffer(value, 'ascii'));
 		this.log('parsedData', parsedData);
